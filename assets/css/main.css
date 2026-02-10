@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* entering page */
+.slide-leave-active {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+/* ONLY animate the leaving page */
+.leave-up-leave-active {
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+}
+
+/* start */
+.leave-up-leave-from {
+  transform: translateY(0);
+}
+
+/* end: page goes up */
+.leave-up-leave-to {
+  transform: translateY(-100%);
+}
+
+/* Disable enter animation completely */
+.leave-up-enter-active,
+.leave-up-enter-from,
+.leave-up-enter-to {
+  transition: none !important;
+  transform: none !important;
+}
+
+.montserrat-black {
+  font-family: Montserrat;
+  font-weight: 900;
+}
+
+.montserrat-regular {
+  font-family: Montserrat;
+}
+
+.montserrat-light-italic {
+  font-family: Montserrat;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.animate-slide-up {
+  animation: slideUp 1s ease-out forwards;
+}
+
+.animate-slide-right {
+  animation: slideRight 1s ease-out forwards;
+}
+
+.animate-slide-up.animate-delay-150 {
+  animation-duration: 1.5s;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(200px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(-120%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media screen and (max-width: 690px) {
+  .about-text{
+    bottom: 8%;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .about-text{
+    font-size: 1.5rem;
+    bottom: 18%;
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .about-text{
+    bottom: 23%;
+  }
+}
