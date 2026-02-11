@@ -1,5 +1,5 @@
 <template>
-    <div class="relative h-screen w-screen">
+    <div class="relative min-h-screen w-screen overflow-hidden">
         <!-- Background Video -->
         <video
             class="absolute inset-0 h-full w-full object-cover"
@@ -44,8 +44,8 @@
         </div>
 
 
-        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[90%] sm:w-[85%] md:w-[70%] lg:w-[55%] h-[70%] sm:h-[65%] md:h-[60%] max-w-6xl">
-            <div class="relative w-full h-full flex items-center justify-center bg-white/15 backdrop-blur-[15px] rounded-2xl overflow-hidden p-4 sm:p-6 md:p-8">
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[90%] sm:w-[85%] md:w-[70%] lg:w-[55%] h-[65vh] max-h-[70vh] sm:max-h-[65vh] md:max-h-[60vh] max-w-6xl">
+            <div class="relative w-full h-full flex items-center justify-center bg-white/15 backdrop-blur-[15px] rounded-2xl overflow-hidden">
                 <span
                     class="pointer-events-none absolute inset-0 rounded-2xl
                         border border-white">
