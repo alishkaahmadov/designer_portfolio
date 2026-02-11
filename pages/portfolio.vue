@@ -6,6 +6,7 @@
             autoplay
             muted
             playsinline
+            preload="auto"
         >
             <source src="/videos/portfolio_bg.mp4" type="video/mp4" />
             Your browser does not support the video tag.

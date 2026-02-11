@@ -78,9 +78,9 @@ const videoRefs = ref([]);
 const activeIndex = ref(0);
 
 const videos = [
-    '/videos/portfolio_1.mp4',
+    '/videos/home_bg.mp4',
     '/videos/portfolio_bg.mp4',
-    '/videos/portfolio_1.mp4'
+    '/videos/about_bg.mp4'
 ]
 
 const videoTitles = [

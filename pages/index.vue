@@ -6,6 +6,7 @@
             autoplay
             muted
             playsinline
+            preload="auto"
         >
             <source
                 src="/videos/home_bg_mobile.mp4"
