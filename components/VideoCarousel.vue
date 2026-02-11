@@ -69,6 +69,7 @@ import { Navigation } from 'swiper/modules'
 
 import 'swiper/css'
 
+const base = useRuntimeConfig().app.baseURL
 const prevEl = ref(null)
 const nextEl = ref(null)
 const swiperInstance = ref(null)
@@ -78,9 +79,9 @@ const videoRefs = ref([]);
 const activeIndex = ref(0);
 
 const videos = [
-    '/videos/home_bg.mp4',
-    '/videos/portfolio_bg.mp4',
-    '/videos/about_bg.mp4'
+  base + 'videos/home_bg.mp4',
+  base + 'videos/portfolio_bg.mp4',
+  base + 'videos/about_bg.mp4'
 ]
 
 const videoTitles = [
