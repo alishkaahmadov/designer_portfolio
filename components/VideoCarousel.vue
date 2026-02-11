@@ -51,7 +51,7 @@
                     </span>
                 </button>
             </div>
-            <Swiper :modules="[Navigation]" :navigation="false" @swiper="onSwiper" @slideChange="onSlideChange" class="swiper w-full md:w-2/5 h-[200px] sm:h-[300px] md:h-full">
+            <Swiper :modules="[Navigation]" :navigation="false" @swiper="onSwiper" @slideChange="onSlideChange" class="swiper swiper-custom w-full md:w-2/5 h-[200px] sm:h-[300px] md:h-full">
                 <SwiperSlide v-for="(video, i) in videos" :key="i">
                     <video ref="videoRefs" autoplay muted playsinline loop preload="metadata" class="video">
                         <source :src="video" type="video/mp4" />
