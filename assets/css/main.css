@@ -91,6 +91,18 @@ body {
   }
 }
 
+@media screen and (max-width: 1500px) {
+  .about-text{
+    bottom: 8%;
+  }
+}
+
+@media screen and (max-width: 1390px) {
+  .about-text{
+    bottom: 10%;
+  }
+}
+
 @media screen and (max-width: 690px) {
   .about-text{
     bottom: 8%;
