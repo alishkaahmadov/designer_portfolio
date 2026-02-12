@@ -2,13 +2,13 @@
     <div class="relative w-screen h-dvh overflow-hidden">
 
         <!-- Background Video -->
-        <video class="absolute inset-0 w-full h-full object-cover" autoplay muted playsinline preload="auto">
+        <video :src="videoSrc" class="absolute inset-0 w-full h-full object-cover" autoplay muted playsinline preload="auto" />
             <!-- Mobile -->
-            <source src="/videos/home_bg_mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
+            <!-- <source src="/videos/home_bg_mobile.mp4" type="video/mp4" media="(max-width: 768px)" /> -->
 
             <!-- Desktop -->
-            <source src="/videos/home_bg.mp4" type="video/mp4" media="(min-width: 769px)" />
-        </video>
+            <!-- <source src="/videos/home_bg.mp4" type="video/mp4" media="(min-width: 769px)" /> -->
+        <!-- </video> -->
 
         <!-- Overlay Content Layer -->
         <div class="absolute inset-0 flex flex-col justify-between z-10">
@@ -75,3 +75,15 @@
         </div>
     </div>
 </template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+
+const videoSrc = ref('/videos/home_bg.mp4')
+
+onMounted(() => {
+  if (window.innerWidth <= 768) {
+    videoSrc.value = '/videos/home_bg_mobile.mp4'
+  }
+})
+</script>

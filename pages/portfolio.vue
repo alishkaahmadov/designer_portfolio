@@ -45,7 +45,7 @@
         </div>
 
 
-        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[90%] sm:w-[85%] md:w-[70%] lg:w-[55%] h-[65vh] max-h-[70vh] sm:max-h-[65vh] md:max-h-[60vh] max-w-6xl">
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[90%] sm:w-[85%] md:w-[70%] lg:w-[55%] h-[65vh] max-h-[70vh] sm:max-h-[65vh] md:max-h-[60vh] max-w-6xl animate-slide-up">
             <div class="relative w-full h-full flex items-center justify-center bg-white/15 backdrop-blur-[15px] rounded-2xl overflow-hidden">
                 <span
                     class="pointer-events-none absolute inset-0 rounded-2xl
