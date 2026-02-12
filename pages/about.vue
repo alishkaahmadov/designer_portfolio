@@ -8,11 +8,11 @@
             playsinline
             preload="auto"
         >
-            <source
+            <!-- <source
                 src="/videos/about_bg_mobile_2.mp4"
                 type="video/mp4"
                 media="(max-width: 440px)"
-            />
+            /> -->
             <source
                 src="/videos/about_bg_mobile.mp4"
                 type="video/mp4"
@@ -47,11 +47,11 @@
         </div>
 
         <!-- Content -->
-        <div class="absolute left-1/2 bottom-[10%] -translate-x-1/2 z-10 animate-slide-up animate-delay-150 text-[#1045D9] montserrat-regular text-3xl about-text">
+        <!-- <div class="absolute left-1/2 bottom-[10%] -translate-x-1/2 z-10 animate-slide-up animate-delay-150 text-[#1045D9] montserrat-regular text-3xl about-text">
             <div class="flex items-center flex-col">
                 <p>jeyhunturksoy@gmail.com</p>
                 <p>+994(70) 222 92 66</p>
             </div>
-        </div>
+        </div> -->
   </div>
 </template>
