@@ -2,6 +2,7 @@
     <div class="relative h-screen w-screen overflow-hidden">
         <!-- Background Video -->
         <video
+            :src="videoSrc"
             class="absolute inset-0 h-full w-full object-cover about-bg"
             autoplay
             muted
@@ -13,18 +14,18 @@
                 type="video/mp4"
                 media="(max-width: 440px)"
             /> -->
-            <source
+            <!-- <source
                 src="/videos/about_bg_mobile.mp4"
                 type="video/mp4"
                 media="(max-width: 690px)"
-            />
+            /> -->
 
             <!-- Desktop -->
-            <source
+            <!-- <source
                 src="/videos/about_bg.mp4"
                 type="video/mp4"
                 media="(min-width: 691px)"
-            />
+            /> -->
             Your browser does not support the video tag.
         </video>
 
