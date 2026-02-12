@@ -59,11 +59,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const videoSrc = ref('/videos/about_bg.mp4')
+const base = useRuntimeConfig().app.baseURL
+const videoSrc = ref(base + '/videos/about_bg.mp4')
 
 onMounted(() => {
   if (window.innerWidth <= 690) {
-    videoSrc.value = '/videos/about_bg_mobile.mp4'
+    videoSrc.value = base + '/videos/about_bg_mobile.mp4'
   }
 })
 </script>
