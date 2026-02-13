@@ -32,8 +32,8 @@
             </span>
         </button>
         <div class="flex flex-col md:flex-row items-center justify-between h-full px-2 py-3 sm:px-3 sm:py-5 md:px-6 md:py-8 2xl:px-12 2xl:py-16">
-            <div class="flex flex-col justify-between w-full md:w-1/2 h-auto md:h-full min-h-[200px] sm:min-h-[220px] md:min-h-[0] gap-6">
-                <h1 class="text-4xl md:text-5xl lg:text-5xl text-white montserrat-black 2xl:leading-normal">
+            <div class="flex flex-col justify-between w-full md:w-1/2 h-auto md:h-full min-h-[200px] sm:min-h-[220px] md:min-h-0 gap-6">
+                <h1 class="text-4xl md:text-5xl text-white montserrat-black leading-10.5 md:leading-13.5">
                     {{ videoTitles[activeIndex].split(' ')[0] }}
                     <span class="montserrat-light-italic block">{{ videoTitles[activeIndex].split(' ').slice(1).join(' ') }}</span>
                 </h1>
@@ -151,6 +151,7 @@ const playActiveVideoFullscreen = async () => {
   border: 1px solid #a1f1ff4b;
   cursor: pointer;
   border-radius: 16px;
+  background-color: rgba(111, 111, 111, 0.1);
 }
 
 .prev {

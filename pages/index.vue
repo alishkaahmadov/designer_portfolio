@@ -2,12 +2,13 @@
     <div class="relative w-screen h-dvh overflow-hidden">
 
         <!-- Background Video -->
-        <video :src="videoSrc" class="absolute inset-0 w-full h-full object-cover" autoplay muted playsinline preload="auto" />
-            <!-- Mobile -->
-            <!-- <source src="/videos/home_bg_mobile.mp4" type="video/mp4" media="(max-width: 768px)" /> -->
+        <video ref="videoRef" :src="videoSrc" @loadeddata="handleCanPlay"
+            class="absolute inset-0 w-full h-full object-cover" autoplay muted playsinline preload="auto" />
+        <!-- Mobile -->
+        <!-- <source src="/videos/home_bg_mobile.mp4" type="video/mp4" media="(max-width: 768px)" /> -->
 
-            <!-- Desktop -->
-            <!-- <source src="/videos/home_bg.mp4" type="video/mp4" media="(min-width: 769px)" /> -->
+        <!-- Desktop -->
+        <!-- <source src="/videos/home_bg.mp4" type="video/mp4" media="(min-width: 769px)" /> -->
         <!-- </video> -->
 
         <!-- Overlay Content Layer -->
@@ -28,7 +29,8 @@
             </div>
 
             <!-- Bottom Button -->
-            <div class="flex justify-center pb-[20vh] sm:pb-[13vh] animate-slide-up">
+            <div :class="['flex justify-center pb-[20vh] sm:pb-[13vh] transition-opacity duration-500',
+                isVideoReady ? 'opacity-100 animate-slide-up' : 'opacity-0']">
                 <NuxtLink to="/portfolio"
                     class="home-button montserrat-black bg-white/15 backdrop-blur-[15px] relative px-6 py-2 text-[#001C76] text-2xl rounded-2xl overflow-hidden border-2 border-[#A1F1FF] border-t-0 border-b-0">
                     PORTFOLIO
@@ -81,10 +83,30 @@ import { ref, onMounted } from 'vue'
 
 const base = useRuntimeConfig().app.baseURL
 const videoSrc = ref(base + '/videos/home_bg.mp4')
+const videoRef = ref(null)
+const isVideoReady = ref(false)
+
+const checkVideoReady = () => {
+    const video = videoRef.value
+    if (!video) return
+
+    // HAVE_CURRENT_DATA = 2
+    if (video.readyState >= 2) {
+        isVideoReady.value = true
+    }
+}
 
 onMounted(() => {
-  if (window.innerWidth <= 768) {
-    videoSrc.value = base + '/videos/home_bg_mobile.mp4'
-  }
+    if (window.innerWidth <= 768) {
+        videoSrc.value = base + '/videos/home_bg_mobile.mp4'
+    }
+    checkVideoReady()
+
+    const video = videoRef.value
+    if (!video) return
+
+    video.addEventListener('loadeddata', () => {
+        isVideoReady.value = true
+    })
 })
 </script>

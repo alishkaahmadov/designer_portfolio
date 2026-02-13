@@ -14,7 +14,7 @@
 
         <!-- Navigation -->
         <div class="absolute left-4 md:left-10 top-10 z-10">
-            <NuxtLink to="/" class="flex items-center gap-2 relative mb-4">
+            <NuxtLink to="/" class="flex items-center gap-2 relative">
                 <!-- Dot -->
                 <span
                     class="w-3 h-3 rounded-full bg-[#002DC1] z-20 relative shrink-0"
