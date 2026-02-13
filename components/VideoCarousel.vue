@@ -31,8 +31,8 @@
                     shadow-[0_0_6px_rgba(255,255,255,0.6),0_0_12px_rgba(255,255,255,0.4)]">
             </span>
         </button>
-        <div class="flex flex-col md:flex-row items-center justify-between h-full px-2 py-3 sm:px-3 sm:py-5 md:px-6 md:py-8 2xl:px-12 2xl:py-16">
-            <div class="flex flex-col justify-between w-full md:w-1/2 h-auto md:h-full min-h-[200px] sm:min-h-[220px] md:min-h-0 gap-6">
+        <div class="flex flex-col md:flex-row items-center justify-between h-full px-2 sm:px-3 md:px-6 py-3 2xl:px-6 sm:py-5 md:py-8 2xl:py-16">
+            <div class="flex flex-col justify-between w-full md:w-1/2 h-[calc(100%-210px)] sm:h-[calc(100%-310px)] md:h-full gap-6">
                 <h1 class="text-4xl md:text-5xl text-white montserrat-black leading-10.5 md:leading-13.5">
                     {{ videoTitles[activeIndex].split(' ')[0] }}
                     <span class="montserrat-light-italic block">{{ videoTitles[activeIndex].split(' ').slice(1).join(' ') }}</span>
@@ -51,7 +51,7 @@
                     </span>
                 </button>
             </div>
-            <Swiper :modules="[Navigation]" :navigation="false" @swiper="onSwiper" @slideChange="onSlideChange" class="swiper swiper-custom w-full md:w-2/5 h-[200px] sm:h-[300px] md:h-full">
+            <Swiper :modules="[Navigation]" :navigation="false" @swiper="onSwiper" @slideChange="onSlideChange" class="swiper swiper-custom ml-0! mr-0! w-full md:w-2/5 h-[200px] sm:h-[300px] md:h-full">
                 <SwiperSlide v-for="(video, i) in videos" :key="i">
                     <video ref="videoRefs" autoplay muted playsinline loop preload="metadata" class="video">
                         <source :src="video" type="video/mp4" />

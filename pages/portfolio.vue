@@ -1,14 +1,14 @@
 <template>
     <div class="relative min-h-screen w-screen overflow-hidden">
         <!-- Background Video -->
-        <video
+        <video ref="videoRef" :src="videoSrc" @loadeddata="handleCanPlay"
             class="absolute inset-0 h-full w-full object-cover"
             autoplay
             muted
             playsinline
             preload="auto"
         >
-            <source src="/videos/portfolio_bg.mp4" type="video/mp4" />
+            <!-- <source src="/videos/portfolio_bg.mp4" type="video/mp4" /> -->
             Your browser does not support the video tag.
         </video>
 
@@ -45,7 +45,7 @@
         </div>
 
 
-        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[90%] sm:w-[85%] md:w-[70%] lg:w-[55%] h-[65vh] max-h-[70vh] sm:max-h-[65vh] md:max-h-[60vh] max-w-6xl animate-slide-up">
+        <div class="animate-slide-up absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[95%] sm:w-[90%] lg:w-[80%] xl:w-[65%] 2xl:w-[55%] h-[65vh] max-h-[70vh] sm:max-h-[65vh] md:max-h-[60vh] max-w-6xl">
             <div class="relative w-full h-full flex items-center justify-center bg-white/15 backdrop-blur-[15px] rounded-2xl overflow-hidden">
                 <span
                     class="pointer-events-none absolute inset-0 rounded-2xl
@@ -100,3 +100,30 @@
         </div>
   </div>
 </template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+
+const base = useRuntimeConfig().app.baseURL
+const videoSrc = ref(base + '/videos/portfolio_bg.mp4')
+const videoRef = ref(null)
+const isVideoReady = ref(false)
+
+onMounted(() => {
+    if (window.innerWidth <= 768) {
+        videoSrc.value = base + '/videos/portfolio_bg_mobile.mp4'
+    }
+    const video = videoRef.value
+    if (!video) return
+
+    const handlePlaying = () => {
+        isVideoReady.value = true
+    }
+
+    video.addEventListener('playing', handlePlaying)
+
+    if (!video.paused) {
+        isVideoReady.value = true
+    }
+})
+</script>
