@@ -100,13 +100,18 @@ onMounted(() => {
     if (window.innerWidth <= 768) {
         videoSrc.value = base + '/videos/home_bg_mobile.mp4'
     }
-    checkVideoReady()
-
     const video = videoRef.value
-    if (!video) return
+  if (!video) return
 
-    video.addEventListener('loadeddata', () => {
-        isVideoReady.value = true
-    })
+  const handlePlaying = () => {
+    isVideoReady.value = true
+  }
+
+  video.addEventListener('playing', handlePlaying)
+
+  // Əgər artıq oynayırsa (refresh + cache case)
+  if (!video.paused) {
+    isVideoReady.value = true
+  }
 })
 </script>
