@@ -1,65 +1,64 @@
 <template>
-    <div class="carousel-wrapper">
-        <!-- Custom buttons -->
-        <button ref="prevEl" class="nav-btn prev" v-show="!isBeginning">
-            <img src="/images/arrow.png" alt="arrow" class="w-4 rotate-180">
-            <!-- Top border -->
-            <span
-                class="absolute top-0 left-[10%] right-[10%] h-0.5
-                    bg-[linear-gradient(90deg,rgba(255,255,255,0.2),white,rgba(255,255,255,0.2))]
-                    shadow-[0_0_6px_rgba(255,255,255,0.6),0_0_12px_rgba(255,255,255,0.4)]">
-            </span>
-            <!-- Bottom border -->
-            <span
-                class="absolute bottom-0 left-[10%] right-[10%] h-0.5
-                    bg-[linear-gradient(90deg,rgba(255,255,255,0.2),white,rgba(255,255,255,0.2))]
-                    shadow-[0_0_6px_rgba(255,255,255,0.6),0_0_12px_rgba(255,255,255,0.4)]">
-            </span>
+  <div class="carousel-wrapper">
+    <!-- Custom buttons -->
+    <button ref="prevEl" class="nav-btn prev" v-show="!isBeginning">
+      <img src="/images/arrow.png" alt="arrow" class="w-4 rotate-180">
+      <!-- Top border -->
+      <span class="absolute top-0 left-[10%] right-[10%] h-0.5
+                  bg-[linear-gradient(90deg,rgba(255,255,255,0.2),white,rgba(255,255,255,0.2))]
+                  shadow-[0_0_6px_rgba(255,255,255,0.6),0_0_12px_rgba(255,255,255,0.4)]">
+      </span>
+      <!-- Bottom border -->
+      <span class="absolute bottom-0 left-[10%] right-[10%] h-0.5
+                  bg-[linear-gradient(90deg,rgba(255,255,255,0.2),white,rgba(255,255,255,0.2))]
+                  shadow-[0_0_6px_rgba(255,255,255,0.6),0_0_12px_rgba(255,255,255,0.4)]">
+      </span>
+    </button>
+    <button ref="nextEl" class="nav-btn next" v-show="!isEnd">
+      <img src="/images/arrow.png" alt="arrow" class="w-4">
+      <!-- Top border -->
+      <span class="absolute top-0 left-[10%] right-[10%] h-0.5
+                  bg-[linear-gradient(90deg,rgba(255,255,255,0.2),white,rgba(255,255,255,0.2))]
+                  shadow-[0_0_6px_rgba(255,255,255,0.6),0_0_12px_rgba(255,255,255,0.4)]">
+      </span>
+      <!-- Bottom border -->
+      <span class="absolute bottom-0 left-[10%] right-[10%] h-0.5
+                  bg-[linear-gradient(90deg,rgba(255,255,255,0.2),white,rgba(255,255,255,0.2))]
+                  shadow-[0_0_6px_rgba(255,255,255,0.6),0_0_12px_rgba(255,255,255,0.4)]">
+      </span>
+    </button>
+    <div
+      class="flex flex-col md:flex-row items-center justify-between h-full px-2 sm:px-3 md:px-6 py-3 2xl:px-6 sm:py-5 md:py-8 2xl:py-16">
+      <div
+        class="slideChange flex flex-col justify-between w-full md:w-1/2 h-[calc(100%-210px)] sm:h-[calc(100%-310px)] md:h-full gap-6">
+        <h1 class="text-4xl md:text-5xl text-white montserrat-black leading-10.5 md:leading-13.5">
+          {{ videoTitles[activeIndex].split(' ')[0] }}
+          <span class="montserrat-light-italic block">{{ videoTitles[activeIndex].split(' ').slice(1).join(' ')
+            }}</span>
+        </h1>
+        <button class="relative px-10 py-3 border-[#a1f1ff4b] border cursor-pointer w-fit rounded-2xl"
+          @click="playActiveVideoFullscreen">
+          <img src="/images/play.png" alt="play" class="w-6">
+          <span class="absolute top-0 left-[10%] right-[10%] h-0.5
+                          bg-[linear-gradient(90deg,rgba(255,255,255,0.2),white,rgba(255,255,255,0.2))]
+                          shadow-[0_0_6px_rgba(255,255,255,0.6),0_0_12px_rgba(255,255,255,0.4)]">
+          </span>
+          <span class="absolute bottom-0 left-[10%] right-[10%] h-0.5
+                          bg-[linear-gradient(90deg,rgba(255,255,255,0.2),white,rgba(255,255,255,0.2))]
+                          shadow-[0_0_6px_rgba(255,255,255,0.6),0_0_12px_rgba(255,255,255,0.4)]">
+          </span>
         </button>
-        <button ref="nextEl" class="nav-btn next" v-show="!isEnd">
-            <img src="/images/arrow.png" alt="arrow" class="w-4">
-            <!-- Top border -->
-            <span
-                class="absolute top-0 left-[10%] right-[10%] h-0.5
-                    bg-[linear-gradient(90deg,rgba(255,255,255,0.2),white,rgba(255,255,255,0.2))]
-                    shadow-[0_0_6px_rgba(255,255,255,0.6),0_0_12px_rgba(255,255,255,0.4)]">
-            </span>
-            <!-- Bottom border -->
-            <span
-                class="absolute bottom-0 left-[10%] right-[10%] h-0.5
-                    bg-[linear-gradient(90deg,rgba(255,255,255,0.2),white,rgba(255,255,255,0.2))]
-                    shadow-[0_0_6px_rgba(255,255,255,0.6),0_0_12px_rgba(255,255,255,0.4)]">
-            </span>
-        </button>
-        <div class="flex flex-col md:flex-row items-center justify-between h-full px-2 sm:px-3 md:px-6 py-3 2xl:px-6 sm:py-5 md:py-8 2xl:py-16">
-            <div class="flex flex-col justify-between w-full md:w-1/2 h-[calc(100%-210px)] sm:h-[calc(100%-310px)] md:h-full gap-6">
-                <h1 class="text-4xl md:text-5xl text-white montserrat-black leading-10.5 md:leading-13.5">
-                    {{ videoTitles[activeIndex].split(' ')[0] }}
-                    <span class="montserrat-light-italic block">{{ videoTitles[activeIndex].split(' ').slice(1).join(' ') }}</span>
-                </h1>
-                <button class="relative px-10 py-3 border-[#a1f1ff4b] border cursor-pointer w-fit rounded-2xl" @click="playActiveVideoFullscreen">
-                    <img src="/images/play.png" alt="play" class="w-6">
-                    <span
-                        class="absolute top-0 left-[10%] right-[10%] h-0.5
-                            bg-[linear-gradient(90deg,rgba(255,255,255,0.2),white,rgba(255,255,255,0.2))]
-                            shadow-[0_0_6px_rgba(255,255,255,0.6),0_0_12px_rgba(255,255,255,0.4)]">
-                    </span>
-                    <span
-                        class="absolute bottom-0 left-[10%] right-[10%] h-0.5
-                            bg-[linear-gradient(90deg,rgba(255,255,255,0.2),white,rgba(255,255,255,0.2))]
-                            shadow-[0_0_6px_rgba(255,255,255,0.6),0_0_12px_rgba(255,255,255,0.4)]">
-                    </span>
-                </button>
-            </div>
-            <Swiper :modules="[Navigation]" :navigation="false" @swiper="onSwiper" @slideChange="onSlideChange" class="swiper swiper-custom ml-0! mr-0! w-full md:w-2/5 h-[200px] sm:h-[300px] md:h-full">
-                <SwiperSlide v-for="(video, i) in videos" :key="i">
-                    <video ref="videoRefs" autoplay muted playsinline loop preload="metadata" class="video">
-                        <source :src="video" type="video/mp4" />
-                    </video>
-                </SwiperSlide>
-            </Swiper>
-        </div>
+      </div>
+      <Swiper :modules="[Navigation]" :navigation="false" @swiper="onSwiper" @slideChange="onSlideChange"
+        class="swiper swiper-custom ml-0! mr-0! w-full md:w-2/5 h-[200px] sm:h-[300px] md:h-full">
+        <SwiperSlide v-for="(video, i) in videos" :key="i">
+          <video ref="videoRefs" autoplay muted playsinline loop preload="metadata" class="video">
+            <source :src="video" type="video/mp4" />
+          </video>
+        </SwiperSlide>
+      </Swiper>
     </div>
+  </div>
 </template>
 
 <script setup>
@@ -85,9 +84,9 @@ const videos = [
 ]
 
 const videoTitles = [
-    'Rolex Paul Newman Daytona Commercial',
-    'Newman Daytona Rolex Paul Commercial',
-    'Paul Commercial Rolex Paul Newman'
+  'Rolex Paul Newman Daytona Commercial',
+  'Newman Daytona Rolex Paul Commercial',
+  'Paul Commercial Rolex Paul Newman'
 ]
 
 const onSwiper = (swiper) => {
@@ -137,12 +136,12 @@ const playActiveVideoFullscreen = async () => {
 
 <style scoped>
 .carousel-wrapper {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-}   
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
 
 .nav-btn {
   position: absolute;
