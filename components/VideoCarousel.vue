@@ -52,7 +52,7 @@
       <Swiper :modules="[Navigation]" :navigation="false" @swiper="onSwiper" @slideChange="onSlideChange"
         class="swiper swiper-custom ml-0! mr-0! w-full md:w-2/5 h-[200px] sm:h-[300px] md:h-full">
         <SwiperSlide v-for="(video, i) in videos" :key="i">
-          <video ref="videoRefs" autoplay muted playsinline loop preload="metadata" class="video">
+          <video ref="videoRefs" autoplay muted playsinline loop preload="auto" class="video">
             <source :src="video" type="video/mp4" />
           </video>
         </SwiperSlide>

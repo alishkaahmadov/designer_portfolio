@@ -1,15 +1,15 @@
 <template>
-    <div class="relative w-screen h-dvh overflow-hidden">
+    <div class="relative w-screen min-h-screen overflow-hidden">
 
         <!-- Background Video -->
-        <video ref="videoRef" :src="videoSrc" @loadeddata="handleCanPlay"
-            class="absolute inset-0 w-full h-full object-cover" autoplay muted playsinline preload="auto" />
-        <!-- Mobile -->
-        <!-- <source src="/videos/home_bg_mobile.mp4" type="video/mp4" media="(max-width: 768px)" /> -->
+        <video ref="videoRef" :src="videoSrc"
+            class="absolute inset-0 w-full h-full object-cover" autoplay muted playsinline preload="auto">
+            <!-- Mobile -->
+            <!-- <source src="/videos/home_bg_mobile.mp4" type="video/mp4" media="(max-width: 768px)" /> -->
 
-        <!-- Desktop -->
-        <!-- <source src="/videos/home_bg.mp4" type="video/mp4" media="(min-width: 769px)" /> -->
-        <!-- </video> -->
+            <!-- Desktop -->
+            <!-- <source src="/videos/home_bg.mp4" type="video/mp4" media="(min-width: 769px)" /> -->
+        </video>
 
         <!-- Overlay Content Layer -->
         <div class="absolute inset-0 flex flex-col justify-between z-10">
@@ -81,16 +81,18 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const videoSrc = ref('/videos/home_bg.mp4')
+const videoSrc = ref('')
 const videoRef = ref(null)
 const isVideoReady = ref(false)
 
 onMounted(() => {
     if (window.innerWidth <= 768) {
         videoSrc.value = '/videos/home_bg_mobile.mp4'
+    }else{
+        videoSrc.value = '/videos/home_bg.mp4'
     }
     const video = videoRef.value
-  if (!video) return
+    if (!video) return
 
   const handlePlaying = () => {
     isVideoReady.value = true
