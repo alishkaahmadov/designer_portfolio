@@ -2,7 +2,7 @@
     <div class="relative min-h-screen w-screen overflow-hidden">
         <!-- Background Video -->
         <video ref="videoRef" :src="videoSrc"
-            class="absolute inset-0 h-full w-full object-cover" autoplay muted playsinline preload="auto">
+            class="absolute inset-0 h-full w-full object-cover" autoplay muted playsinline>
             <!-- Mobile -->
             <!-- <source src="/videos/portfolio_bg_mobile.mp4" type="video/mp4" media="(max-width: 768px)" /> -->
 

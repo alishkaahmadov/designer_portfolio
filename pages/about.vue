@@ -7,7 +7,6 @@
             autoplay
             muted
             playsinline
-            preload="auto"
         >
             <!-- <source
                 src="/videos/about_bg_mobile_2.mp4"
