@@ -313,24 +313,24 @@ const playVideoFullscreen = async (index) => {
     video.addEventListener('pause', handlePause)
 
     // iOS Native Fullscreen
-    if (video.webkitEnterFullscreen) {
-        const handleIOSExit = async () => {
-            isInFullscreen.value = false
+    // if (video.webkitEnterFullscreen) {
+    //     const handleIOSExit = async () => {
+    //         isInFullscreen.value = false
 
-            video.muted = true
-            await video.play()
-            video.removeEventListener('webkitendfullscreen', handleIOSExit)
-        }
+    //         video.muted = true
+    //         await video.play()
+    //         video.removeEventListener('webkitendfullscreen', handleIOSExit)
+    //     }
 
-        video.addEventListener('webkitendfullscreen', handleIOSExit)
+    //     video.addEventListener('webkitendfullscreen', handleIOSExit)
 
-        await video.play()
-        video.webkitEnterFullscreen()
-        return
-    }
+    //     await video.play()
+    //     video.webkitEnterFullscreen()
+    //     return
+    // }
 
     // Android/Desktop
-    if (video.requestFullscreen) {
+    // if (video.requestFullscreen) {
         await video.requestFullscreen()
         await video.play()
 
@@ -343,8 +343,8 @@ const playVideoFullscreen = async (index) => {
             }
         }
 
-        document.addEventListener('fullscreenchange', handleExit)
-    }
+    // }
+    document.addEventListener('fullscreenchange', handleExit)
 }
 </script>
 

@@ -193,10 +193,10 @@ body {
 
 @media screen and (min-height: 710px) and (max-width: 600px) {
   .prev {
-    bottom: 5% !important;
+    bottom: 7% !important;
   }
   
   .next {
-    bottom: calc(5% + 50px) !important;
+    bottom: calc(7% + 50px) !important;
   }
 }
