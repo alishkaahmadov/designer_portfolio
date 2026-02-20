@@ -1,8 +1,7 @@
 <template>
-    <div class="relative min-h-screen w-screen overflow-hidden">
+    <div class="relative min-h-screen w-screen overflow-hidden portfolio_container">
         <!-- Background Video -->
-        <video ref="videoRef" :src="videoSrc"
-            class="absolute inset-0 h-full w-full object-cover" autoplay muted playsinline>
+        <video ref="videoRef" :src="videoSrc" poster="/images/portfolio_poster.jpg" class="absolute inset-0 h-full w-full object-cover" autoplay muted playsinline>
             <!-- Mobile -->
             <!-- <source src="/videos/portfolio_bg_mobile.mp4" type="video/mp4" media="(max-width: 768px)" /> -->
 
@@ -99,9 +98,9 @@
                                 shadow-[0_0_6px_rgba(255,255,255,1),0_0_12px_rgba(255,255,255,1)]">
                         </span>
                         <div class="flex flex-col grow justify-between w-full md:w-1/2 md:h-full">
-                            <h1 class="text-3xl sm:text-4xl md:text-5xl text-white montserrat-black leading-tight md:leading-13.5">
-                                {{ project.title.split(' ')[0] }}
-                                <span class="montserrat-light-italic block">{{ project.title.split(' ').slice(1).join(' ') }}</span>
+                            <h1 class="text-3xl sm:text-4xl md:text-5xl text-white montserrat-black leading-tight md:leading-13.5 whitespace-pre-line">
+                                {{ project.firstWord }}
+                                <span class="montserrat-light-italic block">{{ project.title}}</span>
                             </h1>
                             <button class="relative px-6 py-2 md:px-10 md:py-3 border-[#a1f1ff4b] border cursor-pointer w-fit rounded-2xl my-6 md:my-0" @click="playVideoFullscreen(i)">
                                 <img src="/images/play.png" alt="play" class="w-5 md:w-6">
@@ -117,9 +116,9 @@
                                 </span>
                             </button>
                         </div>
-                        <div class="w-full md:w-2/5 sm:max-h-[280px] md:h-full md:max-h-full">
-                            <video ref="projectVideos" autoplay muted playsinline loop class="w-full h-full object-cover rounded-xl">
-                                <source :src="project.video" type="video/mp4" />
+                        <div class="w-full md:w-2/5 max-h-[200px] sm:max-h-[280px] md:h-full md:max-h-full">
+                            <video ref="projectVideos" :autoplay="loadedSlides.has(i)" muted playsinline loop :preload="loadedSlides.has(i) ? 'auto' : 'none'" :class="isInFullscreen ? 'object-contain bg-black' : 'object-cover'" class="w-full h-full rounded-xl">
+                                <source v-if="loadedSlides.has(i)" :src="project.video" type="video/mp4" />
                             </video>
                         </div>
                     </div>
@@ -161,20 +160,23 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, reactive, computed, nextTick, onMounted } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation } from 'swiper/modules'
 import 'swiper/css'
 
-const videoSrc = ref('')
+const videoSrc = ref('/videos/portfolio_bg_mobile.mp4')
 const videoRef = ref(null)
 const isVideoReady = ref(false)
+const isInFullscreen = ref(false) // Prevent slideChange from interfering with fullscreen
 
 const prevEl = ref(null)
 const nextEl = ref(null)
 const swiperInstance = ref(null)
 const isBeginning = ref(true)
 const isEnd = ref(false)
+const loadedSlides = reactive(new Set([0, 1])) // Only load active + next
+const projectVideos = ref([])
 
 const onSwiper = (swiper) => {
   swiperInstance.value = swiper
@@ -191,35 +193,62 @@ const onSwiper = (swiper) => {
   swiper.on('slideChange', () => {
     isBeginning.value = swiper.isBeginning
     isEnd.value = swiper.isEnd
+
+    // Don't interfere with fullscreen playback
+    if (isInFullscreen.value) return
+
+    // Pre-load the next slide's video
+    const nextIdx = swiper.activeIndex + 1
+    if (nextIdx < projects.length && !loadedSlides.has(nextIdx)) {
+      loadedSlides.add(nextIdx)
+      nextTick(() => {
+        const nextVideo = projectVideos.value[nextIdx]
+        if (!nextVideo) return
+        nextVideo.load()
+      })
+    }
+
     // Stop previous one
     const previousVideo = projectVideos.value[swiper.previousIndex]
-    if (!previousVideo) return
+    if (previousVideo) {
+      previousVideo.pause()
+      previousVideo.currentTime = 0
+    }
+
+    // Start new one (nextTick to let v-if render the source)
     
-    previousVideo.pause()
-    previousVideo.currentTime = 0
-    
-    // Start new one
-    const nextVideo = projectVideos.value[swiper.activeIndex]
-    if (!nextVideo) return
-    
-    nextVideo.pause()
-    nextVideo.currentTime = 0
-    nextVideo.play();
+      const activeVideo = projectVideos.value[swiper.activeIndex]
+      if (!activeVideo) return
+      activeVideo.currentTime = 0
+      activeVideo.play().catch(() => {})
   })
 }
 
 const projects = [
     {
-        title: 'Rolex Daytona Paul Newman Commercial',
-        video: '/videos/portfolio_1.mp4'
+        title: 'Architecture Company Commercial',
+        firstWord: 'Qala Group',
+        video: window.innerWidth <= 768 ? '/videos/portfolio_1_mobile.mp4' : '/videos/portfolio_1.mp4'
     },
     {
-        title: 'Newman Daytona Rolex Paul Commercial',
-        video: '/videos/portfolio_bg.mp4'
+        title: 'Daytona\n Paul Newman\n Commercial',
+        firstWord: 'Rolex',
+        video: window.innerWidth <= 768 ? '/videos/portfolio_2_mobile.mp4' : '/videos/portfolio_2.mp4'
     },
     {
-        title: 'Paul Commercial Rolex Paul Newman',
-        video: '/videos/about_bg.mp4'
+        title: 'Visa Cards\n Commercial',
+        firstWord: 'Revolut',
+        video: window.innerWidth <= 768 ? '/videos/portfolio_3_mobile.mp4' : '/videos/portfolio_3.mp4'
+    },
+    {
+        title: 'Directing, VFX,\n CGI & Editing\n Showreel',
+        firstWord: 'All in one',
+        video: window.innerWidth <= 768 ? '/videos/portfolio_4_mobile.mp4' : '/videos/portfolio_4.mp4'
+    },
+    {
+        title: `Preserve,\n Love, Save\n & Sustain!`,
+        firstWord: 'Planet Earth',
+        video: window.innerWidth <= 768 ? '/videos/portfolio_5_mobile.mp4' : '/videos/portfolio_5.mp4'
     }
 ]
 
@@ -238,15 +267,26 @@ onMounted(() => {
 
     video.addEventListener('playing', handlePlaying)
 
-    if (!video.paused) {
+    // Explicit play with retry for low-end devices where autoplay fails
+    const tryPlay = () => {
+        video.play().catch(() => {
+            // Retry once after a short delay
+            setTimeout(() => video.play().catch(() => {}), 500)
+        })
+    }
+
+    if (video.readyState >= 3) {
         isVideoReady.value = true
+        tryPlay()
+    } else {
+        video.addEventListener('canplay', tryPlay, { once: true })
     }
 })
-const projectVideos = ref([])
 const playVideoFullscreen = async (index) => {
     const video = projectVideos.value[index]
     if (!video) return
 
+    isInFullscreen.value = true
     video.currentTime = 0
     video.muted = false
     video.volume = 1
@@ -255,10 +295,10 @@ const playVideoFullscreen = async (index) => {
         const isDesktopFullscreen = document.fullscreenElement
         const isIOSFullscreen = video.webkitDisplayingFullscreen
 
-        // Əgər hələ də fullscreen-dəyiksə → ignore
         if (isDesktopFullscreen || isIOSFullscreen) return
 
         // Real exit
+        isInFullscreen.value = false
         video.muted = true
 
         try {
@@ -274,7 +314,17 @@ const playVideoFullscreen = async (index) => {
 
     // iOS Native Fullscreen
     if (video.webkitEnterFullscreen) {
-        video.play()
+        const handleIOSExit = async () => {
+            isInFullscreen.value = false
+
+            video.muted = true
+            await video.play()
+            video.removeEventListener('webkitendfullscreen', handleIOSExit)
+        }
+
+        video.addEventListener('webkitendfullscreen', handleIOSExit)
+
+        await video.play()
         video.webkitEnterFullscreen()
         return
     }
@@ -286,6 +336,7 @@ const playVideoFullscreen = async (index) => {
 
         const handleExit = async () => {
             if (!document.fullscreenElement) {
+                isInFullscreen.value = false
                 video.muted = true
                 await video.play()
                 document.removeEventListener('fullscreenchange', handleExit)

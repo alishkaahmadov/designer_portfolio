@@ -1,7 +1,9 @@
 <template>
-    <div class="relative h-screen w-screen overflow-hidden">
+    <div class="relative h-screen w-screen overflow-hidden about-container">
         <!-- Background Video -->
         <video
+            ref="videoRef"
+            poster="/images/about_poster.jpg"
             :src="videoSrc"
             class="absolute inset-0 h-full w-full object-cover about-bg"
             autoplay
@@ -48,13 +50,31 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const videoSrc = ref('')
+const videoSrc = ref('/videos/about_bg_mobile.mp4')
+const videoRef = ref(null)
 
 onMounted(() => {
   if (window.innerWidth <= 690) {
     videoSrc.value = '/videos/about_bg_mobile.mp4'
   }else{
     videoSrc.value = '/videos/about_bg.mp4'
+  }
+
+  const video = videoRef.value
+  if (!video) return
+
+  // Explicit play with retry for low-end devices where autoplay fails
+  const tryPlay = () => {
+    video.play().catch(() => {
+      // Retry once after a short delay
+      setTimeout(() => video.play().catch(() => {}), 500)
+    })
+  }
+
+  if (video.readyState >= 3) {
+    tryPlay()
+  } else {
+    video.addEventListener('canplay', tryPlay, { once: true })
   }
 })
 </script>

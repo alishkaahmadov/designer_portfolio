@@ -1,8 +1,7 @@
 <template>
-    <div class="relative w-screen min-h-screen overflow-hidden">
-
+    <div class="relative w-screen min-h-screen overflow-hidden home-container">
         <!-- Background Video -->
-        <video ref="videoRef" :src="videoSrc"
+        <video ref="videoRef" :src="videoSrc" poster="/images/home_poster.jpg"
             class="absolute inset-0 w-full h-full object-cover" autoplay muted playsinline>
             <!-- Mobile -->
             <!-- <source src="/videos/home_bg_mobile.mp4" type="video/mp4" media="(max-width: 768px)" /> -->
@@ -81,7 +80,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const videoSrc = ref('')
+const videoSrc = ref('/videos/home_bg_mobile.mp4')
 const videoRef = ref(null)
 const isVideoReady = ref(false)
 
@@ -100,8 +99,19 @@ onMounted(() => {
 
   video.addEventListener('playing', handlePlaying)
 
-  if (!video.paused) {
+  // Explicit play with retry for low-end devices where autoplay fails
+  const tryPlay = () => {
+    video.play().catch(() => {
+      // Retry once after a short delay
+      setTimeout(() => video.play().catch(() => {}), 500)
+    })
+  }
+
+  if (video.readyState >= 3) {
     isVideoReady.value = true
+    tryPlay()
+  } else {
+    video.addEventListener('canplay', tryPlay, { once: true })
   }
 })
 </script>
