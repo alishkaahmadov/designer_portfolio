@@ -312,7 +312,7 @@ const playVideoFullscreen = async (index) => {
 
     video.addEventListener('pause', handlePause)
 
-    // iOS Native Fullscreen
+    // iOS Native (mobile safari) Fullscreen
     if (video.webkitEnterFullscreen) {
         const handleIOSExit = async () => {
             isInFullscreen.value = false
@@ -324,9 +324,10 @@ const playVideoFullscreen = async (index) => {
 
         video.addEventListener('webkitendfullscreen', handleIOSExit)
 
-        await video.play()
-        video.webkitEnterFullscreen()
-        return
+        if (window.innerWidth <= 768) {
+            await video.play()
+            video.webkitEnterFullscreen()
+        }
     }
 
     // Android/Desktop
